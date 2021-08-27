@@ -10,7 +10,9 @@ namespace ANSIConsole
     public class ANSIString
     {
         private readonly string _text;
-        private Color? _color;
+        private string _hyperlink;
+        private Color? _colorForeground;
+        private Color? _colorBackground;
         private ANSIFormatting _formatting;
         
         public ANSIString(string text)
@@ -33,18 +35,37 @@ namespace ANSIConsole
             _formatting &= ~rem;
             return this;
         }
-
-        internal Color GetForegroundColor() => _color ?? FromConsoleColor(Console.ForegroundColor);
+        
+        internal Color GetForegroundColor() => _colorForeground ?? FromConsoleColor(Console.ForegroundColor);
+        internal Color GetBackgroundColor() => _colorBackground ?? FromConsoleColor(Console.BackgroundColor);
 
         internal ANSIString SetForegroundColor(Color color)
         {
-            _color = color;
+            _colorForeground = color;
             return this;
         }
 
         internal ANSIString SetForegroundColor(ConsoleColor color)
         {
-                _color = FromConsoleColor(color);
+            _colorForeground = FromConsoleColor(color);
+            return this;
+        }
+
+        internal ANSIString SetBackgroundColor(Color color)
+        {
+            _colorBackground = color;
+            return this;
+        }
+
+        internal ANSIString SetBackgroundColor(ConsoleColor color)
+        {
+            _colorBackground = FromConsoleColor(color);
+            return this;
+        }
+
+        internal ANSIString SetHyperlink(string link)
+        {
+            _hyperlink = link;
             return this;
         }
 
@@ -58,9 +79,14 @@ namespace ANSIConsole
             if (_formatting.HasFlag(ANSIFormatting.Faint)) result = ANSI.Faint + result;
             if (_formatting.HasFlag(ANSIFormatting.Italic)) result = ANSI.Italic + result;
             if (_formatting.HasFlag(ANSIFormatting.Underlined)) result = ANSI.Underlined + result;
+            if (_formatting.HasFlag(ANSIFormatting.Overlined)) result = ANSI.Overlined + result;
+            if (_formatting.HasFlag(ANSIFormatting.Blink)) result = ANSI.Blink + result;
+            if (_formatting.HasFlag(ANSIFormatting.Inverted)) result = ANSI.Inverted + result;
             if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
             
-            if (_color != null) result = ANSI.Foreground((Color)_color) + result;
+            if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
+            if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
+            if (_hyperlink != null) result = ANSI.Hyperlink(result, _hyperlink);
             if (_formatting.HasFlag(ANSIFormatting.Clear)) result += ANSI.Clear;
             return result;
         }

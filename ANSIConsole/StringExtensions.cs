@@ -17,6 +17,10 @@ namespace ANSIConsole
         public static ANSIString Italic(this ANSIString text) => text.AddFormatting(ANSIFormatting.Italic);
         public static ANSIString Underlined(this string text) => Underlined(new ANSIString(text));
         public static ANSIString Underlined(this ANSIString text) => text.AddFormatting(ANSIFormatting.Underlined);
+        public static ANSIString Overlined(this string text) => Overlined(new ANSIString(text));
+        public static ANSIString Overlined(this ANSIString text) => text.AddFormatting(ANSIFormatting.Overlined);
+        public static ANSIString Inverted(this string text) => Inverted(new ANSIString(text));
+        public static ANSIString Inverted(this ANSIString text) => text.AddFormatting(ANSIFormatting.Inverted);
         public static ANSIString StrikeThrough(this string text) => StrikeThrough(new ANSIString(text));
         public static ANSIString StrikeThrough(this ANSIString text) => text.AddFormatting(ANSIFormatting.StrikeThrough);
         public static ANSIString UpperCase(this string text) => UpperCase(new ANSIString(text));
@@ -53,14 +57,30 @@ namespace ANSIConsole
         public static ANSIString Color(this string text, int r, int b, int g, int alpha) => Color(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
         public static ANSIString Color(this string text, ConsoleColor color, int alpha) => Color(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Color(this string text, Color color, int alpha) => Color(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, color));
-        public static ANSIString Color(this string text, string nameOrHex)
-            => Color(new ANSIString(text), nameOrHex);
-
-        public static ANSIString Color(this ANSIString text, string nameOrHex) => text.SetForegroundColor(nameOrHex.StartsWith('#') ?
+        public static ANSIString Color(this string text, string nameOrHex) => Color(new ANSIString(text), nameOrHex);
+        public static ANSIString Color(this ANSIString text, string nameOrHex) => Color(text, nameOrHex.StartsWith('#') ?
             System.Drawing.ColorTranslator.FromHtml(nameOrHex) :
             System.Drawing.Color.FromName(nameOrHex));
 
+        public static ANSIString Background(this string text, ConsoleColor color) => Background(new ANSIString(text), color);
+        public static ANSIString Background(this ANSIString text, ConsoleColor color) => text.SetBackgroundColor(color);
+        public static ANSIString Background(this string text, Color color) => Background(new ANSIString(text), color);
+        public static ANSIString Background(this ANSIString text, Color color) => text.SetBackgroundColor(color);
+        public static ANSIString Background(this string text, int r, int b, int g) => Background(new ANSIString(text), System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Background(this string text, int r, int b, int g, int alpha) => Background(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Background(this string text, ConsoleColor color, int alpha) => Background(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
+        public static ANSIString Background(this string text, Color color, int alpha) => Background(new ANSIString(text), System.Drawing.Color.FromArgb(alpha, color));
+        public static ANSIString Background(this string text, string nameOrHex) => Background(new ANSIString(text), nameOrHex);
+        public static ANSIString Background(this ANSIString text, string nameOrHex) => Background(text, nameOrHex.StartsWith('#') ?
+            System.Drawing.ColorTranslator.FromHtml(nameOrHex) :
+            System.Drawing.Color.FromName(nameOrHex));
+        
         public static ANSIString Opacity(this string text, int alpha) => Opacity(new ANSIString(text), alpha);
         public static ANSIString Opacity(this ANSIString text, int alpha) => text.SetForegroundColor(System.Drawing.Color.FromArgb(alpha, text.GetForegroundColor()));
+        public static ANSIString Blink(this string text) => Blink(new ANSIString(text));
+        public static ANSIString Blink(this ANSIString text) => text.AddFormatting(ANSIFormatting.Blink);
+
+        public static ANSIString Link(this string text, string url) => Link(new ANSIString(text), url);
+        public static ANSIString Link(this ANSIString text, string url) => text.SetHyperlink(url);
     }
 }
