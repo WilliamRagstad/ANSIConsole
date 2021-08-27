@@ -1,6 +1,6 @@
 <div align="center">
     <img src="assets/logo_cropped.png" alt="ANSI Console" width="30%" />
-    <h1 style="border: none"><code>ANSI Console</code></h1>
+    <h1><code>ANSI Console</code></h1>
     <p style="padding-bottom: 100px;">
         Lightweight and flexible text formatter<br>
         for creating beautifully colored console applications.
@@ -15,7 +15,7 @@ Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/332068
 ## Related projects
 
 * [Spectre.Console](https://github.com/spectreconsole/spectre.console)
-* [[Colorful.Console](https://github.com/tomakita/Colorful.Console)]
+* [Colorful.Console](https://github.com/tomakita/Colorful.Console)
 * [Pastel](https://github.com/silkfire/Pastel)
 * [rich](https://github.com/willmcgugan/rich)
 * [Spectre.Terminals](https://github.com/spectreconsole/terminal)
