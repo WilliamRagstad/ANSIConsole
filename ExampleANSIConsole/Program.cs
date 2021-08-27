@@ -7,24 +7,22 @@ namespace ExampleANSIConsole
     {
         static void Main(string[] args)
         {
-            AnsiCodes();
+            // AnsiCodes();
             AnsiConsole();
         }
 
         static void AnsiConsole()
         {
             ANSIInitializer.Init();
-            Console.Write("Test".Bold().Color("#ffbb00").NoClear());
-            Console.WriteLine("Spill".Clear());
-            Console.WriteLine("Test");
-            Console.WriteLine("Test".Color("#775500"));
-            Console.WriteLine("Test".Color("#775500").Bold());
-            Console.WriteLine("Test".Italic());
-            Console.WriteLine("Test".Underlined());
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Test".StrikeThrough().Color(ConsoleColor.Red));
-            Console.WriteLine("Test".Bold().Color(ConsoleColor.Red));
-            Console.WriteLine("Test".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
+            Console.Write("Bold with no clear - ".Bold().Color("#ffbb00").NoClear()); Console.WriteLine("formatting spills over".Clear());
+            Console.WriteLine("No formatting");
+            Console.WriteLine("Colored!!!".Color("#775500"));
+            Console.WriteLine("Bold colored".Color("#775500").Bold());
+            Console.WriteLine("Italic".Italic());
+            Console.WriteLine("Underlined".Underlined());
+            Console.WriteLine("Strike through".StrikeThrough().Color(ConsoleColor.Red));
+            Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
+            Console.WriteLine("Very faint link".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
             Console.WriteLine("I'm blinking".Blink());
         }
 
