@@ -3,9 +3,10 @@
     <h1><code>ANSI Console</code></h1>
     <p style="padding-bottom: 100px;">
         Lightweight and flexible text formatter<br>
-        for creating beautifully colored console applications.
+        for creating <em>beautiful</em> console applications.
     </p>
 </div>
+
 
 ## Features
 * Color formatting using: `System.ConsoleColor`, `System.Drawing.Color`, **RGB**, **HEX**, **Named/known colors** ([list](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.brushes?view=net-5.0)) and **True color** (24-bit format with over 16.7 million colors, [Wikipedia](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)))
