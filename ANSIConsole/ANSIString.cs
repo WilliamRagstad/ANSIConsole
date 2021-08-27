@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,33 +10,87 @@ namespace ANSIConsole
     public class ANSIString
     {
         private readonly string _text;
-        internal ANSIFormatting Formatting;
+        private Color? _color;
+        private ANSIFormatting _formatting;
         
-        public ANSIString(string text) : this(text, ANSIFormatting.None) { }
-        public ANSIString(string text, ANSIFormatting formatting)
+        public ANSIString(string text)
         {
             _text = text;
-            Formatting = formatting;
-            if (formatting.HasFlag(ANSIFormatting.UpperCase | ANSIFormatting.LowerCase))
-                throw new ArgumentException("formatting cannot include both UpperCase and LowerCase!",
-                    nameof(formatting));
+            _formatting = ANSIFormatting.Clear;
         }
 
         internal ANSIString AddFormatting(ANSIFormatting add)
         {
-            Formatting |= add;
+            _formatting |= add;
+            if (_formatting.HasFlag(ANSIFormatting.UpperCase | ANSIFormatting.LowerCase))
+                throw new ArgumentException("formatting cannot include both UpperCase and LowerCase!",
+                    nameof(_formatting));
+            return this;
+        }
+
+        internal ANSIString RemoveFormatting(ANSIFormatting rem)
+        {
+            _formatting &= ~rem;
+            return this;
+        }
+
+        internal Color GetForegroundColor() => _color ?? FromConsoleColor(Console.ForegroundColor);
+
+        internal ANSIString SetForegroundColor(Color color)
+        {
+            _color = color;
+            return this;
+        }
+
+        internal ANSIString SetForegroundColor(ConsoleColor color)
+        {
+                _color = FromConsoleColor(color);
             return this;
         }
 
         public override string ToString()
         {
-            if (Formatting == ANSIFormatting.None) return _text;
+            if (!ANSIInitializer.Enabled || _formatting == ANSIFormatting.None) return _text;
             string result = _text;
-            if (Formatting.HasFlag(ANSIFormatting.UpperCase)) result = result.ToUpper();
-            if (Formatting.HasFlag(ANSIFormatting.LowerCase)) result = result.ToLower();
-
-            if (!Formatting.HasFlag(ANSIFormatting.NoClear)) result += ANSI.Clear;
+            if (_formatting.HasFlag(ANSIFormatting.UpperCase)) result = result.ToUpper();
+            if (_formatting.HasFlag(ANSIFormatting.LowerCase)) result = result.ToLower();
+            if (_formatting.HasFlag(ANSIFormatting.Bold)) result = ANSI.Bold + result;
+            if (_formatting.HasFlag(ANSIFormatting.Faint)) result = ANSI.Faint + result;
+            if (_formatting.HasFlag(ANSIFormatting.Italic)) result = ANSI.Italic + result;
+            if (_formatting.HasFlag(ANSIFormatting.Underlined)) result = ANSI.Underlined + result;
+            if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
+            
+            if (_color != null) result = ANSI.Foreground((Color)_color) + result;
+            if (_formatting.HasFlag(ANSIFormatting.Clear)) result += ANSI.Clear;
             return result;
         }
+
+        internal static Color FromConsoleColor(ConsoleColor color)
+        {
+            try {
+                return Color.FromArgb(ConsoleColors[(int)color]);
+            } catch {
+                throw new ArgumentOutOfRangeException(nameof(color), $"{color} is not a valid color");
+            }
+        }
+
+        internal static readonly int[] ConsoleColors = {
+            0x000000, //Black = 0
+            0x000080, //DarkBlue = 1
+            0x008000, //DarkGreen = 2
+            0x008080, //DarkCyan = 3
+            0x800000, //DarkRed = 4
+            0x800080, //DarkMagenta = 5
+            0x808000, //DarkYellow = 6
+            0xC0C0C0, //Gray = 7
+            0x808080, //DarkGray = 8
+            0x0000FF, //Blue = 9
+            0x00FF00, //Green = 10
+            0x00FFFF, //Cyan = 11
+            0xFF0000, //Red = 12
+            0xFF00FF, //Magenta = 13
+            0xFFFF00, //Yellow = 14
+            0xFFFFFF  //White = 15
+        };
     }
 }

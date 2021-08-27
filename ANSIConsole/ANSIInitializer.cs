@@ -25,29 +25,36 @@ namespace ANSIConsole
         /// Run once before using the console.
         /// You may not need to initialize the ANSI console mode.
         /// </summary>
-        public static void Init()
+        /// <returns>true if initialization was successful</returns>
+        public static bool Init(bool printError = true)
         {
             var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
             if (!GetConsoleMode(iStdOut, out uint outConsoleMode))
             {
-                System.Console.WriteLine("failed to get output console mode");
-                System.Console.ReadKey();
-                return;
+                if (printError) Console.WriteLine("failed to get output console mode");
+                return false;
             }
 
             outConsoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
             if (!SetConsoleMode(iStdOut, outConsoleMode))
             {
-                System.Console.WriteLine($"failed to set output console mode, error code: {GetLastError()}");
-                System.Console.ReadKey();
-                return;
+                if (printError) Console.WriteLine($"failed to set output console mode, error code: {GetLastError()}");
+                return false;
             }
 
-            System.Console.WriteLine("\u001b[31mHello World!\u001b[0m");
-            System.Console.WriteLine("\u001b[31;1;4mHello World!\u001b[0m");
-            System.Console.WriteLine("\u001b[31m\u001b[1;4mHello World!\u001b[0m");
-            System.Console.WriteLine("\u001b[31m\u001b[1mHello World!\u001b[0m");
-            // Console.WriteLine("\u001b[2J"); // Clear the screan
+            return true;
+        }
+
+        private static bool? _enabled;
+        public static bool Enabled
+        {
+            get
+            {
+                if (_enabled != null) return (bool)_enabled;
+                _enabled = Environment.GetEnvironmentVariable("NO_COLOR") == null;
+                return Enabled;
+            }
+            set => _enabled = value;
         }
     }
 }

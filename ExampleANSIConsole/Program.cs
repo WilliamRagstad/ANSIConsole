@@ -15,7 +15,17 @@ namespace ExampleANSIConsole
         {
             ANSIInitializer.Init();
             Console.WriteLine("Test");
-            Console.WriteLine("Test".Bold());
+            Console.Write("Test".Bold().Color("#ffbb00").NoClear());
+            Console.WriteLine("Spill".Clear());
+            Console.WriteLine("Test");
+            Console.WriteLine("Test".Color("#ffbb00"));
+            Console.WriteLine("Test".Color("#ffbb00").Bold());
+            Console.WriteLine("Test".Italic());
+            Console.WriteLine("Test".Underlined());
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Test".StrikeThrough().Color(ConsoleColor.Red));
+            Console.WriteLine("Test".Bold().Color(ConsoleColor.Red));
+            Console.WriteLine("Test".Faint().Color(ConsoleColor.Red));
         }
 
         static void AnsiCodes()

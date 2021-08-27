@@ -25,3 +25,9 @@ Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/332068
 * [rich](https://github.com/willmcgugan/rich)
 * [Spectre.Terminals](https://github.com/spectreconsole/terminal)
 * [System.Terminal](https://github.com/alexrp/system-terminal)
+
+## NO_COLOR
+
+No formatting will be applied for systems where console color output has explicitly been requested to be turned off using the environment variable `NO_COLOR`. See more information about this initiative at [https://no-color.org](https://no-color.org/).
+
+This can be overwritten by setting the `ANSIInitializer.Enabled = true`.
