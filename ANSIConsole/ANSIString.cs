@@ -85,7 +85,7 @@ namespace ANSIConsole
             if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
             
             if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
-            if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
+            if (_colorBackground != null) result = ANSI.Background((Color)_colorBackground) + result;
             if (_hyperlink != null) result = ANSI.Hyperlink(result, _hyperlink);
             if (_formatting.HasFlag(ANSIFormatting.Clear)) result += ANSI.Clear;
             return result;

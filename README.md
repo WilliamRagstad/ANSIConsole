@@ -12,11 +12,25 @@
 * Color formatting using: `System.ConsoleColor`, `System.Drawing.Color`, **RGB**, **HEX**, **Named/known colors** ([list](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.brushes?view=net-5.0)) and **True color** (24-bit format with over 16.7 million colors, [Wikipedia](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)))
 * Styles: Bold, Italic, Underlined, Overlined, Strike-through, Inverted, Faint, Opacity, Blink, Uppercase and Lowercase.
 * Hyperlinks
+* Custom inline formatting method `FormatANSI`.
 * Chainable formatting methods.
 * ANSI initialization for the system console (If not enabled already). *(Method shown in [Using ANSI color codes in .NET Core Console applications](https://www.jerriepelser.com/blog/using-ansi-color-codes-in-net-console-apps/))*
 * Builds on-top of the default `Console` using `string` extension methods.
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
+
+### FormatANSI
+
+Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
+Use **\`-|background|text`** to only add background color.
+
+Example:
+
+```c#
+Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
+```
+
+![formatted result](assets/formatting.gif)
 
 ## Related projects
 

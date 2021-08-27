@@ -18,12 +18,13 @@ namespace ExampleANSIConsole
             Console.WriteLine("No formatting");
             Console.WriteLine("Colored!!!".Color("#775500"));
             Console.WriteLine("Bold colored".Color("#775500").Bold());
-            Console.WriteLine("Italic".Italic());
+            Console.WriteLine("Italic".Italic().Background(ConsoleColor.Cyan));
             Console.WriteLine("Underlined".Underlined());
             Console.WriteLine("Strike through".StrikeThrough().Color(ConsoleColor.Red));
             Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
             Console.WriteLine("Very faint link".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
             Console.WriteLine("I'm blinking".Blink());
+            Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
         }
 
         static void AnsiCodes()

@@ -9,6 +9,9 @@ namespace ANSIConsole
 {
     public static class StringExtensions
     {
+        private static ANSIString ToANSI(this string text) => new ANSIString(text);
+        private static ANSIString AddFormatting(this string text, ANSIFormatting formatting) => AddFormatting(new ANSIString(text), formatting);
+        private static ANSIString AddFormatting(this ANSIString text, ANSIFormatting formatting) => text.AddFormatting(formatting);
         public static ANSIString Bold(this string text) => Bold(new ANSIString(text));
         public static ANSIString Bold(this ANSIString text) => text.AddFormatting(ANSIFormatting.Bold);
         public static ANSIString Faint(this string text) => Faint(new ANSIString(text));
@@ -82,5 +85,50 @@ namespace ANSIConsole
 
         public static ANSIString Link(this string text, string url) => Link(new ANSIString(text), url);
         public static ANSIString Link(this ANSIString text, string url) => text.SetHyperlink(url);
+        /// <summary>
+        /// Format text, applying the corresponding ANSI format in the formatting array to the matching `(color|(background|))text´ in the text.
+        /// Use `-|background|text` to only add background color.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="formatting"></param>
+        /// <returns></returns>
+        public static ANSIString FormatANSI(this string text, params ANSIFormatting[] formatting)
+        {
+            if (text.Count(c => c == '`') != formatting.Length) throw new FormatException("text must have the same number of formatting arguments as there are corresponding `...´ pairs.");
+            string result = string.Empty;
+            int formatIndex = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '`')
+                {
+                    string colorFG = null;
+                    string colorBG = null;
+                    string match = string.Empty;
+                    i++;
+                    while (text[i] != '´' && i < text.Length)
+                    {
+                        if (text[i] == '|')
+                        {
+                            if (colorFG == null) colorFG = match;
+                            else if (colorBG == null) colorBG = match;
+                            match = string.Empty;
+                            i++;
+                            continue;
+                        }
+                        match += text[i];
+                        i++;
+                    }
+
+                    ANSIString ansi = match.ToANSI();
+                    if (colorFG != null && colorFG != "-") ansi = ansi.Color(colorFG);
+                    if (colorBG != null && colorBG != "-") ansi = ansi.Background(colorBG);
+                    result += ansi.AddFormatting(formatting[formatIndex]);
+                    formatIndex++;
+                }
+                else result += text[i];
+            }
+
+            return new ANSIString(result);
+        }
     }
 }
