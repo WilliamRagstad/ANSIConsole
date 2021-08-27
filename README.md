@@ -12,6 +12,11 @@
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
 
+## Resources
+
+* https://en.wikipedia.org/wiki/ANSI_escape_code
+* https://stackoverflow.com/a/33206814/5698805
+
 ## Related projects
 
 * [Spectre.Console](https://github.com/spectreconsole/spectre.console)
