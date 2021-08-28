@@ -8,20 +8,20 @@ namespace ExampleANSIConsole
     {
         static void Main(string[] args)
         {
-            AnsiCodes();
+            // AnsiCodes();
             AnsiConsole();
         }
 
         static void AnsiConsole()
         {
-            ANSIInitializer.Init();
+            if (!ANSIInitializer.Init(false)) ANSIInitializer.Enabled = false;
             Console.Write("Bold with no clear - ".Bold().Color("#ffbb00").NoClear()); Console.WriteLine("formatting spills over".Clear());
             Console.WriteLine("No formatting");
             Console.WriteLine("Colored!!!".Color("#775500"));
             Console.WriteLine("Bold colored".Color("#775500").Bold());
             Console.WriteLine("Italic".Italic().Color(Color.Black).Background(ConsoleColor.Cyan));
             Console.WriteLine("Underlined".Underlined());
-            Console.WriteLine("Strike through".StrikeThrough().Color(ConsoleColor.Red));
+            Console.WriteLine("Strike through".StrikeThrough().Color(3, 4, 6));
             Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
             Console.WriteLine("Very faint link".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
             Console.WriteLine("I'm blinking".Blink());
