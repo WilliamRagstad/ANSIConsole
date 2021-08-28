@@ -56,10 +56,10 @@ namespace ANSIConsole
         public static ANSIString Color(this ANSIString text, ConsoleColor color) => text.SetForegroundColor(color);
         public static ANSIString Color(this string text, Color color) => Color(ToANSI(text), color);
         public static ANSIString Color(this ANSIString text, Color color) => text.SetForegroundColor(color);
-        public static ANSIString Color(this string text, int r, int b, int g) => Color(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
-        public static ANSIString Color(this ANSIString text, int r, int b, int g) => Color(text, System.Drawing.Color.FromArgb(r, g, b));
-        public static ANSIString Color(this string text, int r, int b, int g, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
-        public static ANSIString Color(this ANSIString text, int r, int b, int g, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Color(this string text, int r, int g, int b) => Color(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Color(this ANSIString text, int r, int g, int b) => Color(text, System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Color(this string text, int r, int g, int b, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Color(this ANSIString text, int r, int g, int b, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
         public static ANSIString Color(this string text, ConsoleColor color, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Color(this ANSIString text, ConsoleColor color, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Color(this string text, Color color, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, color));
