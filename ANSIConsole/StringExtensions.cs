@@ -57,9 +57,13 @@ namespace ANSIConsole
         public static ANSIString Color(this string text, Color color) => Color(ToANSI(text), color);
         public static ANSIString Color(this ANSIString text, Color color) => text.SetForegroundColor(color);
         public static ANSIString Color(this string text, int r, int b, int g) => Color(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Color(this ANSIString text, int r, int b, int g) => Color(text, System.Drawing.Color.FromArgb(r, g, b));
         public static ANSIString Color(this string text, int r, int b, int g, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Color(this ANSIString text, int r, int b, int g, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
         public static ANSIString Color(this string text, ConsoleColor color, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
+        public static ANSIString Color(this ANSIString text, ConsoleColor color, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Color(this string text, Color color, int alpha) => Color(ToANSI(text), System.Drawing.Color.FromArgb(alpha, color));
+        public static ANSIString Color(this ANSIString text, Color color, int alpha) => Color(text, System.Drawing.Color.FromArgb(alpha, color));
         public static ANSIString Color(this string text, string nameOrHex) => Color(ToANSI(text), nameOrHex);
         public static ANSIString Color(this ANSIString text, string nameOrHex) => Color(text, nameOrHex.StartsWith('#') ?
             System.Drawing.ColorTranslator.FromHtml(nameOrHex) :
@@ -70,9 +74,13 @@ namespace ANSIConsole
         public static ANSIString Background(this string text, Color color) => Background(ToANSI(text), color);
         public static ANSIString Background(this ANSIString text, Color color) => text.SetBackgroundColor(color);
         public static ANSIString Background(this string text, int r, int b, int g) => Background(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Background(this ANSIString text, int r, int b, int g) => Background(text, System.Drawing.Color.FromArgb(r, g, b));
         public static ANSIString Background(this string text, int r, int b, int g, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Background(this ANSIString text, int r, int b, int g, int alpha) => Background(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
         public static ANSIString Background(this string text, ConsoleColor color, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
+        public static ANSIString Background(this ANSIString text, ConsoleColor color, int alpha) => Background(text, System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Background(this string text, Color color, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, color));
+        public static ANSIString Background(this ANSIString text, Color color, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, color));
         public static ANSIString Background(this string text, string nameOrHex) => Background(ToANSI(text), nameOrHex);
         public static ANSIString Background(this ANSIString text, string nameOrHex) => Background(text, nameOrHex.StartsWith('#') ?
             System.Drawing.ColorTranslator.FromHtml(nameOrHex) :
