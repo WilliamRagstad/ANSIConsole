@@ -24,6 +24,14 @@
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
 
+## Install
+
+```
+> dotnet add package ANSI.Console
+```
+
+Or download `ANSI.Console` directly from [NuGet](https://www.nuget.org/packages/ANSI.Console).
+
 ### FormatANSI
 
 Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
@@ -42,6 +50,8 @@ Console.WriteLine("This `Green|text´ has `Black|Gray|inline {"formatted".Italic
 Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
 ```
 ![formatted result](assets/formatting.gif)
+
+
 
 
 
