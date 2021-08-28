@@ -86,6 +86,7 @@ namespace ANSIConsole
         public static ANSIString Link(this ANSIString text, string url) => text.SetHyperlink(url);
         /// <summary>
         /// If string represents a URL, make that string a click-able hyperlink.
+        /// Make a link where the text is also the url.
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
