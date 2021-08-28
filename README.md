@@ -1,7 +1,7 @@
 <div align="center">
     <img src="assets/logo_cropped.png" alt="ANSI Console" width="30%" />
     <h1><code>ANSI Console</code></h1>
-    <p style="padding-bottom: 100px;">
+    <p>
         Lightweight and flexible text formatter<br>
         for creating <em>beautiful</em> console applications.
 		<br><br>
@@ -10,7 +10,17 @@
         <img alt="GitHub" src="https://img.shields.io/github/license/WilliamRagstad/ANSIConsole">
         <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/WilliamRagstad/ANSIConsole">
     </p>
+    <br><br>
 </div>
+
+## Install
+
+```
+> dotnet add package ANSI.Console
+```
+
+Or download `ANSI.Console` directly from [NuGet](https://www.nuget.org/packages/ANSI.Console).
+
 
 
 ## Features
@@ -24,15 +34,71 @@
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
 
-## Install
+### Initialization
 
+One should always initialize the ANSI console mode before writing anything to the console. The line below will try to initialize returning true if successful. If initialization failed, disable all ANSI codes from being printed without needing to change any of your formatting logic. Colors and formatting is automatically disabled for systems with the `NO_COLOR` environment variable enabled, read more [here](#NO_COLOR).
+
+```c#
+if (!ANSIInitializer.Init(false)) ANSIInitializer.Enabled = false;
 ```
-> dotnet add package ANSI.Console
+
+### Colors and styles
+
+#### Colors
+
+* Use regular `ConsoleColor`.
+
+```c#
+"My text".Color(ConsoleColor.Red)
 ```
 
-Or download `ANSI.Console` directly from [NuGet](https://www.nuget.org/packages/ANSI.Console).
+* Or even better, any `Color`.
 
-### FormatANSI
+```c#
+"My text".Color(Color.IndianRed)
+```
+
+* Too long still? Use just the color name.
+
+```c#
+"My text".Color("IndianRed")
+```
+
+* Want more control? Use hexadecimal color values.
+
+```c#
+"My text".Color("#775500")
+```
+
+* Or even RGB color values.
+
+```c#
+"My text".Color(256, 127, 0)
+```
+
+#### Styles
+
+You can chain all formatting styles in any order.
+
+```c#
+"My text".Bold().Italic().Color("IndianRed").Underlined().StrikeThrough().Blink();
+```
+
+#### Links
+
+Use `.Link()` if the text is also a valid URL. This only works on strings, and not if you have used any other formatting method before it.
+
+```c#
+"https://www.nuget.org/packages/ANSI.Console".Link().Bold();
+```
+
+If you fancy using a custom title, use `.Link(url)`. This can be used in any order in the chained formatting list.
+
+```c#
+"ANSI.Console".Bold().Link("https://www.nuget.org/packages/ANSI.Console");
+```
+
+### Inline formating using `FormatANSI`
 
 Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
 Use **\`color|text´** to add foreground color, and **\`|background|text´** to only add background color.
