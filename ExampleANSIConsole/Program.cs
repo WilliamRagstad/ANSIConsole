@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using ANSIConsole;
 
 namespace ExampleANSIConsole
@@ -18,7 +19,7 @@ namespace ExampleANSIConsole
             Console.WriteLine("No formatting");
             Console.WriteLine("Colored!!!".Color("#775500"));
             Console.WriteLine("Bold colored".Color("#775500").Bold());
-            Console.WriteLine("Italic".Italic().Background(ConsoleColor.Cyan));
+            Console.WriteLine("Italic".Italic().Color(Color.Black).Background(ConsoleColor.Cyan));
             Console.WriteLine("Underlined".Underlined());
             Console.WriteLine("Strike through".StrikeThrough().Color(ConsoleColor.Red));
             Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
@@ -26,6 +27,7 @@ namespace ExampleANSIConsole
             Console.WriteLine("I'm blinking".Blink());
             Console.WriteLine($"\n   This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´\n".FormatANSI());
             Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
+            // Console.WriteLine($"`Red|{"O".Opacity(20)}{"p".Opacity(40)}{"a".Opacity(60)}{"c".Opacity(80)}{"i".Opacity(100)}{"t".Opacity(120)}{"y".Opacity(140)}´".FormatANSI());
         }
 
         static void AnsiCodes()

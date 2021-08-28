@@ -4,6 +4,11 @@
     <p style="padding-bottom: 100px;">
         Lightweight and flexible text formatter<br>
         for creating <em>beautiful</em> console applications.
+		<br><br>
+        <img alt="Nuget" src="https://img.shields.io/nuget/v/ANSI.Console">
+    	<img alt="Nuget" src="https://img.shields.io/nuget/dt/ANSI.Console">
+        <img alt="GitHub" src="https://img.shields.io/github/license/WilliamRagstad/ANSIConsole">
+        <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/WilliamRagstad/ANSIConsole">
     </p>
 </div>
 

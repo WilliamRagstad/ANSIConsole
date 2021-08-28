@@ -12,7 +12,8 @@ Features:
 * Hyperlinks
 * Chainable formatting methods.
 * ANSI initialization for the system console (If not enabled already). (Method shown in Using ANSI color codes in .NET Core Console applications)
-* Builds on-top of the default Console using string extension methods.</Description>
+* Builds on-top of the default Console using string extension methods.
+* .NET 5</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/WilliamRagstad/ANSIConsole</PackageProjectUrl>
     <PackageIcon>logo_cropped.png</PackageIcon>
@@ -22,7 +23,7 @@ Features:
     <PackageTags>console, formatting, color, colors</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>ANSI.Console</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
