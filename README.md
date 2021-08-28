@@ -14,7 +14,7 @@
 * Hyperlinks
 * Custom inline formatting method `FormatANSI`.
 * Chainable formatting methods.
-* ANSI initialization for the system console (If not enabled already). *(Method shown in [Using ANSI color codes in .NET Core Console applications](https://www.jerriepelser.com/blog/using-ansi-color-codes-in-net-console-apps/))*
+* ANSI initialization for the system console (If not enabled already).
 * Builds on-top of the default `Console` using `string` extension methods.
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
@@ -22,24 +22,23 @@ Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/332068
 ### FormatANSI
 
 Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
-Use **\`-|background|text`** to only add background color.
+Use **\`color|text´** to add foreground color, and **\`|background|text´** to only add background color.
 
-Example:
+#### Example: Only color
+
+```c#
+Console.WriteLine("This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´".FormatANSI());
+```
+![](assets/formatting_colors.png)
+
+#### Example: Multi formatted
 
 ```c#
 Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
 ```
-
 ![formatted result](assets/formatting.gif)
 
-## Related projects
 
-* [Spectre.Console](https://github.com/spectreconsole/spectre.console)
-* [Colorful.Console](https://github.com/tomakita/Colorful.Console)
-* [Pastel](https://github.com/silkfire/Pastel)
-* [rich](https://github.com/willmcgugan/rich)
-* [Spectre.Terminals](https://github.com/spectreconsole/terminal)
-* [System.Terminal](https://github.com/alexrp/system-terminal)
 
 ## NO_COLOR
 
@@ -60,3 +59,11 @@ This can be overwritten by setting the `ANSIInitializer.Enabled = true`.
 * [Using ANSI color codes in .NET Core Console applications](https://www.jerriepelser.com/blog/using-ansi-color-codes-in-net-console-apps/)
 * [Spectre.Console lets you make beautiful console apps with .NET Core](https://www.hanselman.com/blog/spectreconsole-lets-you-make-beautiful-console-apps-with-net-core)
 
+## Related projects
+
+* [Spectre.Console](https://github.com/spectreconsole/spectre.console)
+* [Colorful.Console](https://github.com/tomakita/Colorful.Console)
+* [Pastel](https://github.com/silkfire/Pastel)
+* [rich](https://github.com/willmcgugan/rich)
+* [Spectre.Terminals](https://github.com/spectreconsole/terminal)
+* [System.Terminal](https://github.com/alexrp/system-terminal)

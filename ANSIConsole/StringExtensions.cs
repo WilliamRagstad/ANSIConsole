@@ -87,14 +87,14 @@ namespace ANSIConsole
         public static ANSIString Link(this ANSIString text, string url) => text.SetHyperlink(url);
         /// <summary>
         /// Format text, applying the corresponding ANSI format in the formatting array to the matching `(color|(background|))text´ in the text.
-        /// Use `-|background|text` to only add background color.
+        /// Use `|background|text` to only add background color.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="formatting"></param>
         /// <returns></returns>
         public static ANSIString FormatANSI(this string text, params ANSIFormatting[] formatting)
         {
-            if (text.Count(c => c == '`') != formatting.Length) throw new FormatException("text must have the same number of formatting arguments as there are corresponding `...´ pairs.");
+            if (text.Count(c => c == '`') < formatting.Length) throw new FormatException("Cannot have more formatting arguments than there are corresponding `...´ pairs.");
             string result = string.Empty;
             int formatIndex = 0;
             for (int i = 0; i < text.Length; i++)
@@ -120,9 +120,10 @@ namespace ANSIConsole
                     }
 
                     ANSIString ansi = match.ToANSI();
-                    if (colorFG != null && colorFG != "-") ansi = ansi.Color(colorFG);
-                    if (colorBG != null && colorBG != "-") ansi = ansi.Background(colorBG);
-                    result += ansi.AddFormatting(formatting[formatIndex]);
+                    if (!string.IsNullOrEmpty(colorFG)) ansi = ansi.Color(colorFG);
+                    if (!string.IsNullOrEmpty(colorBG)) ansi = ansi.Background(colorBG);
+                    if (formatIndex < formatting.Length) ansi = ansi.AddFormatting(formatting[formatIndex]);
+                    result += ansi;
                     formatIndex++;
                 }
                 else result += text[i];

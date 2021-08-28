@@ -7,7 +7,7 @@ namespace ExampleANSIConsole
     {
         static void Main(string[] args)
         {
-            // AnsiCodes();
+            AnsiCodes();
             AnsiConsole();
         }
 
@@ -24,7 +24,8 @@ namespace ExampleANSIConsole
             Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
             Console.WriteLine("Very faint link".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
             Console.WriteLine("I'm blinking".Blink());
-            Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
+            Console.WriteLine($"\n   This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´\n".FormatANSI());
+            Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
         }
 
         static void AnsiCodes()
