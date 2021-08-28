@@ -82,9 +82,14 @@ namespace ANSIConsole
         public static ANSIString Opacity(this ANSIString text, int alpha) => text.SetForegroundColor(System.Drawing.Color.FromArgb(alpha, text.GetForegroundColor()));
         public static ANSIString Blink(this string text) => Blink(new ANSIString(text));
         public static ANSIString Blink(this ANSIString text) => text.AddFormatting(ANSIFormatting.Blink);
-
         public static ANSIString Link(this string text, string url) => Link(new ANSIString(text), url);
         public static ANSIString Link(this ANSIString text, string url) => text.SetHyperlink(url);
+        /// <summary>
+        /// If string represents a URL, make that string a click-able hyperlink.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static ANSIString Link(this string text) => Link(new ANSIString(text), text);
         /// <summary>
         /// Format text, applying the corresponding ANSI format in the formatting array to the matching `(color|(background|))text´ in the text.
         /// Use `|background|text` to only add background color.
