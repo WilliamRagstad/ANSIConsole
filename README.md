@@ -12,6 +12,11 @@
     </p>
     <br><br>
 </div>
+## About
+
+ANSI Console aims to be as **developer friendly and easy to use** as possible. The reason this library was created is because many of the already existing libraries doesn't provide a good user interface. The main purpose of this library is to fix this, console formatting should be **accessible and fun**!
+
+
 
 ## Install
 
@@ -98,7 +103,7 @@ If you fancy using a custom title, use `.Link(url)`. This can be used in any ord
 "ANSI.Console".Bold().Link("https://www.nuget.org/packages/ANSI.Console");
 ```
 
-### Inline formating using `FormatANSI`
+### Inline formatting using `FormatANSI`
 
 Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
 Use **\`color|text´** to add foreground color, and **\`|background|text´** to only add background color.
