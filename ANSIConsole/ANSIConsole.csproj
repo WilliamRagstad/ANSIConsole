@@ -4,16 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Authors>Dotch</Authors>
     <Company />
-    <Description>Lightweight and flexible text formatter for creating beautiful console applications.
-
-Features:
-* Color formatting using: System.ConsoleColor, System.Drawing.Color, RGB, HEX, Named/known colors (list) and True color (24-bit format with over 16.7 million colors)
-* Styles: Bold, Italic, Underlined, Overlined, Strike-through, Inverted, Faint, Opacity, Blink, Uppercase and Lowercase.
-* Hyperlinks
-* Chainable formatting methods.
-* ANSI initialization for the system console (If not enabled already). (Method shown in Using ANSI color codes in .NET Core Console applications)
-* Builds on-top of the default Console using string extension methods.
-* .NET 5</Description>
+    <Description>Lightweight and flexible text formatter for creating beautiful console applications.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/WilliamRagstad/ANSIConsole</PackageProjectUrl>
     <PackageIcon>logo_cropped.png</PackageIcon>
@@ -23,7 +14,7 @@ Features:
     <PackageTags>console, formatting, more, colors, ansi, ascii, lightweight, easy, .NET 5.0</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>ANSI.Console</PackageId>
-    <Version>2.4.0</Version>
+    <Version>2.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
