@@ -187,16 +187,16 @@ namespace ANSIConsole
         /// Map over a text to produce generative formattings
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="alternator"></param>
+        /// <param name="generator"></param>
         /// <returns></returns>
-        public static ANSIString MapANSI(this string text, Func<string, int, ANSIString> alternator) => ToANSI(string.Join("", text.Select((c, i) => alternator(c.ToString(), i))));
+        public static ANSIString MapANSI(this string text, Func<string, int, ANSIString> generator) => ToANSI(string.Join("", text.Select((c, i) => generator(c.ToString(), i))));
         /// <summary>
         /// Map over a text to produce generative formattings
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="alternator"></param>
+        /// <param name="generator"></param>
         /// <returns></returns>
-        public static ANSIString MapANSI(this string text, Func<string, ANSIString> alternator) => ToANSI(string.Join("", text.Select(c => alternator(c.ToString()))));
+        public static ANSIString MapANSI(this string text, Func<string, ANSIString> generator) => ToANSI(string.Join("", text.Select(c => generator(c.ToString()))));
         
         public static ANSIString Gradient(this string text, Color background, params Color[] colors) => text.MapANSI((c, i) =>
         {
