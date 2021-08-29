@@ -20,7 +20,7 @@ Features:
     <PackageIconUrl />
     <RepositoryUrl>https://github.com/WilliamRagstad/ANSIConsole</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <PackageTags>console, formatting, ansi, ascii, more, color, colors, lightweight, easy, .NET 5.0</PackageTags>
+    <PackageTags>console, formatting, more, colors, ansi, ascii, lightweight, easy, .NET 5.0</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>ANSI.Console</PackageId>
     <Version>2.3.0</Version>
