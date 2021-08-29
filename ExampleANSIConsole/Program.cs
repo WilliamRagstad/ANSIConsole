@@ -27,7 +27,7 @@ namespace ExampleANSIConsole
             Console.WriteLine("I'm blinking".Blink());
             Console.WriteLine($"This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´".FormatANSI());
             Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
-            Console.WriteLine($"{"O".Opacity(10)}{"p".Opacity(20)}{"a".Opacity(30)}{"c".Opacity(50)}{"i".Opacity(60)}{"t".Opacity(80)}{"y".Opacity(90)}");
+            Console.WriteLine($"{"O".Opacity(90)}{"p".Opacity(80)}{"a".Opacity(60)}{"c".Opacity(50)}{"i".Opacity(30)}{"t".Opacity(20)}{"y".Opacity(10)}");
             Console.WriteLine($"This `text´ has `inline {"formatted".Italic().NoClear()}´ `c´`o´`l´`o´`r´`s´".FormatColor(ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.DarkMagenta, ConsoleColor.Blue, ConsoleColor.Cyan));
             Console.WriteLine("This is a gradient".Gradient(ANSIString.FromConsoleColor(Console.BackgroundColor), Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
             Console.WriteLine("This is a gradient".GradientBackground(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));

@@ -91,7 +91,7 @@ namespace ANSIConsole
             if (_formatting.HasFlag(ANSIFormatting.Inverted)) result = ANSI.Inverted + result;
             if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
             
-            if (_opacity != null) result = ANSI.Foreground(Interpolate(_colorForeground ?? FromConsoleColor(Console.ForegroundColor), _colorBackground ?? FromConsoleColor(Console.BackgroundColor), (float)_opacity)) + result;
+            if (_opacity != null) result = ANSI.Foreground(Interpolate(_colorBackground ?? FromConsoleColor(Console.BackgroundColor), _colorForeground ?? FromConsoleColor(Console.ForegroundColor), (float)_opacity)) + result;
             else if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
             if (_colorBackground != null) result = ANSI.Background((Color)_colorBackground) + result;
             if (_hyperlink != null) result = ANSI.Hyperlink(result, _hyperlink);
