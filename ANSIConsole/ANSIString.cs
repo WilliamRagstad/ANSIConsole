@@ -13,6 +13,7 @@ namespace ANSIConsole
         private string _hyperlink;
         private Color? _colorForeground;
         private Color? _colorBackground;
+        private float? _opacity;
         private ANSIFormatting _formatting;
         
         public ANSIString(string text)
@@ -63,6 +64,12 @@ namespace ANSIConsole
             return this;
         }
 
+        internal ANSIString SetOpacity(float opacity)
+        {
+            _opacity = opacity;
+            return this;
+        }
+
         internal ANSIString SetHyperlink(string link)
         {
             _hyperlink = link;
@@ -84,14 +91,15 @@ namespace ANSIConsole
             if (_formatting.HasFlag(ANSIFormatting.Inverted)) result = ANSI.Inverted + result;
             if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
             
-            if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
+            if (_opacity != null) result = ANSI.Foreground(Interpolate(_colorForeground ?? FromConsoleColor(Console.ForegroundColor), _colorBackground ?? FromConsoleColor(Console.BackgroundColor), (float)_opacity)) + result;
+            else if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
             if (_colorBackground != null) result = ANSI.Background((Color)_colorBackground) + result;
             if (_hyperlink != null) result = ANSI.Hyperlink(result, _hyperlink);
             if (_formatting.HasFlag(ANSIFormatting.Clear)) result += ANSI.Clear;
             return result;
         }
 
-        internal static Color FromConsoleColor(ConsoleColor color)
+        public static Color FromConsoleColor(ConsoleColor color)
         {
             try {
                 return Color.FromArgb(ConsoleColors[(int)color]);
@@ -118,5 +126,15 @@ namespace ANSIConsole
             0xFFFF00, //Yellow = 14
             0xFFFFFF  //White = 15
         };
+
+        public static Color Interpolate(Color from, Color to, float percentage)
+        {
+            float rtlPercentage = 1 - percentage;
+            int r = (byte)(rtlPercentage * from.R + percentage * to.R);
+            int g = (byte)(rtlPercentage * from.G + percentage * to.G);
+            int b = (byte)(rtlPercentage * from.B + percentage * to.B);
+
+            return Color.FromArgb(r, g, b);
+        }
     }
 }

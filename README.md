@@ -36,6 +36,8 @@ Or download `ANSI.Console` directly from [NuGet](https://www.nuget.org/packages/
 * Chainable formatting methods.
 * ANSI initialization for the system console (If not enabled already).
 * Builds on-top of the default `Console` using `string` extension methods.
+* Mapping methods using generators
+* Gradients with unlimited colors
 
 Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/33206814/5698805).
 
@@ -89,6 +91,18 @@ You can chain all formatting styles in any order.
 "My text".Bold().Italic().Color("IndianRed").Underlined().StrikeThrough().Blink();
 ```
 
+#### Opacity
+
+Add opacity easily using `.Opacity(percent)`. `percent` must be between 0 and 100. The code below could be rewritten and improved using the map method below.
+
+```c#
+Console.WriteLine($"{"O".Opacity(10)}{"p".Opacity(20)}{"a".Opacity(30)}{"c".Opacity(50)}{"i".Opacity(60)}{"t".Opacity(80)}{"y".Opacity(90)}");
+```
+
+
+
+![](assets/opacity.png)
+
 #### Links
 
 Use `.Link()` if the text is also a valid URL. This only works on strings, and not if you have used any other formatting method before it.
@@ -103,6 +117,40 @@ If you fancy using a custom title, use `.Link(url)`. This can be used in any ord
 "ANSI.Console".Bold().Link("https://www.nuget.org/packages/ANSI.Console");
 ```
 
+#### Map
+
+Use the `MapANSI` method to generate custom patterns, highlighting or anything else you can think of.
+
+```c#
+Console.WriteLine("Every second letter is yellow".MapANSI((c, i) => i % 2 == 0 ? c.Color(ConsoleColor.Yellow) : c.ToANSI()));
+```
+
+
+
+![](assets/map.png)
+
+#### Gradients
+
+Add text gradients interpolating between any amount of colors. The first argument is the background color.
+
+```c#
+Console.WriteLine("This is a gradient".Gradient(ANSIString.FromConsoleColor(Console.BackgroundColor), Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+```
+
+
+
+![](assets/gradient.png)
+
+Or background gradients. The first argument is the foreground color. (Sadly the two cannot be combined yet. But maybe in a future release if there is interest)
+
+```c#
+Console.WriteLine("This is a gradient".GradientBackground(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+```
+
+
+
+![](assets/gradient_background.png)
+
 ### Inline formatting using `FormatANSI`
 
 Format text directly in line, applying the corresponding ANSI format in the formatting array to the matching **\`(color|(background|))text´** in the text.
@@ -111,18 +159,28 @@ Use **\`color|text´** to add foreground color, and **\`|background|text´** to 
 #### Example: Only color
 
 ```c#
-Console.WriteLine("This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´".FormatANSI());
+Console.WriteLine($"This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´".FormatANSI());
 ```
 ![](assets/formatting_colors.png)
 
 #### Example: Multi formatted
 
 ```c#
-Console.WriteLine("`Red|This´ is `-|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
+Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
 ```
 ![formatted result](assets/formatting.gif)
 
+### Inline colors using `FormatColor`
 
+Unless you don't want any other formatting that colors, use this method instead. You don't need to specify the color in the text itself, but as arguments to the `FormatColor` method.
+
+This is perfect if you want to quickly spice-up your console applications usage/about/help message or manual page.
+
+```c#
+Console.WriteLine($"This `text´ has `inline {"formatted".Italic().NoClear()}´ `c´`o´`l´`o´`r´`s´".FormatColor(ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.DarkMagenta, ConsoleColor.Blue, ConsoleColor.Cyan));
+```
+
+![](assets/format_colors.png)
 
 
 

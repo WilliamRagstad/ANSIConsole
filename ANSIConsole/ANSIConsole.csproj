@@ -23,7 +23,7 @@ Features:
     <PackageTags>console, formatting, more, colors, ansi, ascii, lightweight, easy, .NET 5.0</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>ANSI.Console</PackageId>
-    <Version>2.3.0</Version>
+    <Version>2.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

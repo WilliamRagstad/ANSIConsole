@@ -21,13 +21,17 @@ namespace ExampleANSIConsole
             Console.WriteLine("Bold colored".Color("#775500").Bold());
             Console.WriteLine("Italic".Italic().Color(Color.Black).Background(ConsoleColor.Cyan));
             Console.WriteLine("Underlined".Underlined());
-            Console.WriteLine("Strike through".StrikeThrough().Color(256, 127, 0));
+            Console.WriteLine("Strike through".StrikeThrough().Color(255, 127, 0));
             Console.WriteLine("Bold and Overlined".Bold().Color(ConsoleColor.Red).Overlined());
             Console.WriteLine("Very faint link".Faint().Color(ConsoleColor.Red).Link("https://www.williamragstad.com/"));
             Console.WriteLine("I'm blinking".Blink());
-            Console.WriteLine($"\n   This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´\n".FormatANSI());
+            Console.WriteLine($"This `Green|text´ has `Black|Gray|inline {"formatted".Italic().NoClear()}´ `Yellow|c´`Orange|o´`Red|l´`Purple|o´`Blue|r´`Aqua|s´".FormatANSI());
             Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
-            // Console.WriteLine($"`Red|{"O".Opacity(20)}{"p".Opacity(40)}{"a".Opacity(60)}{"c".Opacity(80)}{"i".Opacity(100)}{"t".Opacity(120)}{"y".Opacity(140)}´".FormatANSI());
+            Console.WriteLine($"{"O".Opacity(10)}{"p".Opacity(20)}{"a".Opacity(30)}{"c".Opacity(50)}{"i".Opacity(60)}{"t".Opacity(80)}{"y".Opacity(90)}");
+            Console.WriteLine($"This `text´ has `inline {"formatted".Italic().NoClear()}´ `c´`o´`l´`o´`r´`s´".FormatColor(ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.DarkMagenta, ConsoleColor.Blue, ConsoleColor.Cyan));
+            Console.WriteLine("This is a gradient".Gradient(ANSIString.FromConsoleColor(Console.BackgroundColor), Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+            Console.WriteLine("This is a gradient".GradientBackground(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+            Console.WriteLine("Every second letter is yellow".MapANSI((c, i) => i % 2 == 0 ? c.Color(ConsoleColor.Yellow) : c.ToANSI()));
         }
 
         static void AnsiCodes()

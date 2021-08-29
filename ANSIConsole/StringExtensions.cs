@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ANSIConsole
 {
     public static class StringExtensions
     {
-        private static ANSIString ToANSI(this string text) => new ANSIString(text);
-        private static ANSIString AddFormatting(this string text, ANSIFormatting formatting) => AddFormatting(ToANSI(text), formatting);
-        private static ANSIString AddFormatting(this ANSIString text, ANSIFormatting formatting) => text.AddFormatting(formatting);
+        public static ANSIString ToANSI(this string text) => new ANSIString(text);
+        public static ANSIString AddFormatting(this string text, ANSIFormatting formatting) => AddFormatting(ToANSI(text), formatting);
+        public static ANSIString AddFormatting(this ANSIString text, ANSIFormatting formatting) => text.AddFormatting(formatting);
         public static ANSIString Bold(this string text) => Bold(ToANSI(text));
         public static ANSIString Bold(this ANSIString text) => text.AddFormatting(ANSIFormatting.Bold);
         public static ANSIString Faint(this string text) => Faint(ToANSI(text));
@@ -86,8 +83,8 @@ namespace ANSIConsole
             System.Drawing.ColorTranslator.FromHtml(nameOrHex) :
             System.Drawing.Color.FromName(nameOrHex));
         
-        public static ANSIString Opacity(this string text, int alpha) => Opacity(ToANSI(text), alpha);
-        public static ANSIString Opacity(this ANSIString text, int alpha) => text.SetForegroundColor(System.Drawing.Color.FromArgb(alpha, text.GetForegroundColor()));
+        public static ANSIString Opacity(this string text, int percent) => Opacity(ToANSI(text), percent);
+        public static ANSIString Opacity(this ANSIString text, int percent) => text.SetOpacity((float)percent / 100);
         public static ANSIString Blink(this string text) => Blink(ToANSI(text));
         public static ANSIString Blink(this ANSIString text) => text.AddFormatting(ANSIFormatting.Blink);
         public static ANSIString Link(this string text, string url) => Link(ToANSI(text), url);
@@ -145,5 +142,93 @@ namespace ANSIConsole
 
             return ToANSI(result);
         }
+        /// <summary>
+        /// Format using only foreground color.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="colors"></param>
+        /// <returns></returns>
+        public static ANSIString FormatColor(this string text, params ConsoleColor[] colors) =>
+            FormatColor(text, colors.Select(ANSIString.FromConsoleColor).ToArray());
+        /// <summary>
+        /// Format using only foreground color.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="colors"></param>
+        /// <returns></returns>
+        public static ANSIString FormatColor(this string text, params Color[] colors)
+        {
+            if (text.Count(c => c == '`') < colors.Length) throw new FormatException("Cannot have more color arguments than there are corresponding `...´ pairs.");
+            string result = string.Empty;
+            int formatIndex = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '`')
+                {
+                    string match = string.Empty;
+                    i++;
+                    while (text[i] != '´' && i < text.Length)
+                    {
+                        match += text[i];
+                        i++;
+                    }
+
+                    ANSIString ansi = ToANSI(match);
+                    if (formatIndex < colors.Length) ansi = ansi.SetForegroundColor(colors[formatIndex]);
+                    result += ansi;
+                    formatIndex++;
+                }
+                else result += text[i];
+            }
+
+            return ToANSI(result);
+        }
+        /// <summary>
+        /// Map over a text to produce generative formattings
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="alternator"></param>
+        /// <returns></returns>
+        public static ANSIString MapANSI(this string text, Func<string, int, ANSIString> alternator) => ToANSI(string.Join("", text.Select((c, i) => alternator(c.ToString(), i))));
+        /// <summary>
+        /// Map over a text to produce generative formattings
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="alternator"></param>
+        /// <returns></returns>
+        public static ANSIString MapANSI(this string text, Func<string, ANSIString> alternator) => ToANSI(string.Join("", text.Select(c => alternator(c.ToString()))));
+        
+        public static ANSIString Gradient(this string text, Color background, params Color[] colors) => text.MapANSI((c, i) =>
+        {
+            float percentage = (colors.Length - 1) * ((float)i / text.Length);
+            int colorPrevIndex = (int)percentage;
+            int colorNextIndex = (int)Math.Ceiling(percentage);
+            Color colorPrev = colors[colorPrevIndex];
+            Color colorNext = colors[colorNextIndex];
+            float ltrOffset = percentage - colorPrevIndex;
+            float rtlOffset = 1 - ltrOffset;
+                
+            int r = (byte)(rtlOffset * colorPrev.R + ltrOffset * colorNext.R);
+            int g = (byte)(rtlOffset * colorPrev.G + ltrOffset * colorNext.G);
+            int b = (byte)(rtlOffset * colorPrev.B + ltrOffset * colorNext.B);
+                
+            return c.ToString().Background(background).Color(r, g, b);
+        });
+        public static ANSIString GradientBackground(this string text, Color foreground, params Color[] colors) => text.MapANSI((c, i) =>
+        {
+            float percentage = (colors.Length - 1) * ((float)i / text.Length);
+            int colorPrevIndex = (int)percentage;
+            int colorNextIndex = (int)Math.Ceiling(percentage);
+            Color colorPrev = colors[colorPrevIndex];
+            Color colorNext = colors[colorNextIndex];
+            float ltrOffset = percentage - colorPrevIndex;
+            float rtlOffset = 1 - ltrOffset;
+                
+            int r = (byte)(rtlOffset * colorPrev.R + ltrOffset * colorNext.R);
+            int g = (byte)(rtlOffset * colorPrev.G + ltrOffset * colorNext.G);
+            int b = (byte)(rtlOffset * colorPrev.B + ltrOffset * colorNext.B);
+                
+            return c.ToString().Background(r, g, b).Color(foreground);
+        });
     }
 }
