@@ -12,6 +12,7 @@
     </p>
     <br><br>
 </div>
+
 ## About
 
 ANSI Console aims to be as **developer friendly and easy to use** as possible. The reason this library was created is because many of the already existing libraries doesn't provide a good user interface. The main purpose of this library is to fix this, console formatting should be **accessible and fun**!
