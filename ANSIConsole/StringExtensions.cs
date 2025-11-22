@@ -70,10 +70,10 @@ namespace ANSIConsole
         public static ANSIString Background(this ANSIString text, ConsoleColor color) => text.SetBackgroundColor(color);
         public static ANSIString Background(this string text, Color color) => Background(ToANSI(text), color);
         public static ANSIString Background(this ANSIString text, Color color) => text.SetBackgroundColor(color);
-        public static ANSIString Background(this string text, int r, int b, int g) => Background(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
-        public static ANSIString Background(this ANSIString text, int r, int b, int g) => Background(text, System.Drawing.Color.FromArgb(r, g, b));
-        public static ANSIString Background(this string text, int r, int b, int g, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
-        public static ANSIString Background(this ANSIString text, int r, int b, int g, int alpha) => Background(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Background(this string text, int r, int g, int b) => Background(ToANSI(text), System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Background(this ANSIString text, int r, int g, int b) => Background(text, System.Drawing.Color.FromArgb(r, g, b));
+        public static ANSIString Background(this string text, int r, int g, int b, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, r, g, b));
+        public static ANSIString Background(this ANSIString text, int r, int g, int b, int alpha) => Background(text, System.Drawing.Color.FromArgb(alpha, r, g, b));
         public static ANSIString Background(this string text, ConsoleColor color, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Background(this ANSIString text, ConsoleColor color, int alpha) => Background(text, System.Drawing.Color.FromArgb(alpha, ANSIString.FromConsoleColor(color)));
         public static ANSIString Background(this string text, Color color, int alpha) => Background(ToANSI(text), System.Drawing.Color.FromArgb(alpha, color));
