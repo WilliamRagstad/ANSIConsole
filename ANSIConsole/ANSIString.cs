@@ -78,7 +78,7 @@ namespace ANSIConsole
 
         public override string ToString()
         {
-            if (!ANSIInitializer.Enabled || _formatting == ANSIFormatting.None) return _text;
+            if (!ANSIInitializer.Enabled) return _text;
             string result = _text;
             if (_formatting.HasFlag(ANSIFormatting.UpperCase)) result = result.ToUpper();
             if (_formatting.HasFlag(ANSIFormatting.LowerCase)) result = result.ToLower();
