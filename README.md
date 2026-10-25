@@ -29,6 +29,10 @@ Or download `ANSI.Console` directly from [NuGet](https://www.nuget.org/packages/
 
 
 
+## Framework support and migration
+
+Version 3 targets `net8.0` and `net10.0`; .NET 10 is recommended. .NET 5–7 consumers must upgrade their application target or stay on 2.x. The string-extension API and `ANSI.Console` package ID remain unchanged. See [compatibility and build guidance](docs/compatibility.md) for support dates, RGB migration, and package verification.
+
 ## Features
 * Color formatting using: `System.ConsoleColor`, `System.Drawing.Color`, **RGB**, **HEX**, **Named/known colors** ([list](https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.brushes?view=net-5.0)) and **True color** (24-bit format with over 16.7 million colors, [Wikipedia](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)))
 * Styles: Bold, Italic, Underlined, Overlined, Strike-through, Inverted, Faint, Opacity, Blink, Uppercase and Lowercase.
@@ -44,7 +48,7 @@ Learn more about ANSI escape sequences [here](https://stackoverflow.com/a/332068
 
 ### Initialization
 
-One should always initialize the ANSI console mode before writing anything to the console. The line below will try to initialize returning true if successful. If initialization failed, disable all ANSI codes from being printed without needing to change any of your formatting logic. Colors and formatting is automatically disabled for systems with the `NO_COLOR` environment variable enabled, read more [here](#NO_COLOR).
+On Windows, initialize the ANSI console mode before writing to the console. On Unix, `Init` returns true without calling Windows APIs; this does not detect terminal capabilities. The line below will try to initialize returning true if successful. If initialization failed, disable all ANSI codes from being printed without needing to change any of your formatting logic. Colors and formatting is automatically disabled for systems with the `NO_COLOR` environment variable enabled, read more [here](#NO_COLOR).
 
 ```c#
 if (!ANSIInitializer.Init(false)) ANSIInitializer.Enabled = false;
@@ -81,7 +85,7 @@ if (!ANSIInitializer.Init(false)) ANSIInitializer.Enabled = false;
 * Or even RGB color values.
 
 ```c#
-"My text".Color(256, 127, 0)
+"My text".Color(255, 127, 0)
 ```
 
 #### Styles
@@ -135,7 +139,7 @@ Console.WriteLine("Every second letter is yellow".MapANSI((c, i) => i % 2 == 0 ?
 Add text gradients interpolating between any amount of colors. The first argument is the background color.
 
 ```c#
-Console.WriteLine("This is a gradient".Gradient(ANSIString.FromConsoleColor(Console.BackgroundColor), Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+Console.WriteLine("This is a gradient".Gradient(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
 ```
 
 
