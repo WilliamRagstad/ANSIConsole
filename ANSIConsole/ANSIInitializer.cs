@@ -28,6 +28,9 @@ namespace ANSIConsole
         /// <returns>true if initialization was successful</returns>
         public static bool Init(bool printError = true)
         {
+            // Unix terminals do not require the Windows console-mode API.
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return true;
+
             var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
             if (!GetConsoleMode(iStdOut, out uint outConsoleMode))
             {

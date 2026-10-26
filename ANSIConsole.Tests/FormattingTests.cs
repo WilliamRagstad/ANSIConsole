@@ -77,6 +77,15 @@ namespace ANSIConsole.Tests
         }
 
         [Fact]
+        public void OpacityBlendsExplicitColors()
+        {
+            Assert.Equal("\u001b[48;2;0;0;0m\u001b[38;2;100;50;20mx\u001b[0m",
+                "x".Color(200, 100, 40).Background(0, 0, 0).Opacity(50).ToString());
+            // Also exercises unknown terminal defaults under redirected Unix output.
+            Assert.Contains("\u001b[38;2;", "x".Opacity(50).ToString());
+        }
+
+        [Fact]
         public void NamedHexAndConsoleColorsAgree()
         {
             Assert.Equal("x".Color(Color.Red).ToString(), "x".Color("Red").ToString());

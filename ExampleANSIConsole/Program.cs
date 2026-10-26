@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using ANSIConsole;
 
@@ -8,6 +8,16 @@ namespace ExampleANSIConsole
     {
         static void Main(string[] args)
         {
+            if (Array.IndexOf(args, "--verify") >= 0)
+            {
+                bool enabled = ANSIInitializer.Enabled;
+                ANSIInitializer.Enabled = true;
+                if ("x".Background(17, 83, 241).Bold().ToString() !=
+                    "\u001b[48;2;17;83;241m\u001b[1mx\u001b[0m")
+                    throw new InvalidOperationException("Package formatting verification failed.");
+                ANSIInitializer.Enabled = enabled;
+                Console.WriteLine("Package formatting verified.");
+            }
             // AnsiCodes();
             AnsiConsole();
         }
@@ -29,7 +39,7 @@ namespace ExampleANSIConsole
             Console.WriteLine("`Red|This´ is `|Green|a´ `Blue|formatted´ `string´".FormatANSI(ANSIFormatting.Bold | ANSIFormatting.Overlined, ANSIFormatting.None, ANSIFormatting.Blink, ANSIFormatting.Inverted));
             Console.WriteLine($"{"O".Opacity(90)}{"p".Opacity(80)}{"a".Opacity(60)}{"c".Opacity(50)}{"i".Opacity(30)}{"t".Opacity(20)}{"y".Opacity(10)}");
             Console.WriteLine($"This `text´ has `inline {"formatted".Italic().NoClear()}´ `c´`o´`l´`o´`r´`s´".FormatColor(ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.DarkMagenta, ConsoleColor.Blue, ConsoleColor.Cyan));
-            Console.WriteLine("This is a gradient".Gradient(ANSIString.FromConsoleColor(Console.BackgroundColor), Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
+            Console.WriteLine("This is a gradient".Gradient(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
             Console.WriteLine("This is a gradient".GradientBackground(Color.Black, Color.Yellow, Color.Red, Color.Blue, Color.Cyan));
             Console.WriteLine("Every second letter is yellow".MapANSI((c, i) => i % 2 == 0 ? c.Color(ConsoleColor.Yellow) : c.ToANSI()));
         }
