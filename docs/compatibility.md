@@ -83,4 +83,5 @@ dotnet pack ANSIConsole/ANSIConsole.csproj -c Release -o artifacts/packages
 2. `modernize/framework-package` (based on step 1): supported targets, version 3
    metadata, portable initialization, sample, documentation, and package/CI checks.
 
-The branches are local review units; they have not been pushed or opened as PRs.
+Review and merge the regression change first. The modernization PR initially
+targets the regression branch; retarget it to `main` after the first PR merges.
