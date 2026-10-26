@@ -37,8 +37,8 @@ namespace ANSIConsole
             return this;
         }
         
-        internal Color GetForegroundColor() => _colorForeground ?? FromConsoleColor(Console.ForegroundColor);
-        internal Color GetBackgroundColor() => _colorBackground ?? FromConsoleColor(Console.BackgroundColor);
+        internal Color GetForegroundColor() => _colorForeground ?? ConsoleColorOrDefault(Console.ForegroundColor, Color.Gray);
+        internal Color GetBackgroundColor() => _colorBackground ?? ConsoleColorOrDefault(Console.BackgroundColor, Color.Black);
 
         internal ANSIString SetForegroundColor(Color color)
         {
@@ -78,7 +78,7 @@ namespace ANSIConsole
 
         public override string ToString()
         {
-            if (!ANSIInitializer.Enabled || _formatting == ANSIFormatting.None) return _text;
+            if (!ANSIInitializer.Enabled) return _text;
             string result = _text;
             if (_formatting.HasFlag(ANSIFormatting.UpperCase)) result = result.ToUpper();
             if (_formatting.HasFlag(ANSIFormatting.LowerCase)) result = result.ToLower();
@@ -91,13 +91,17 @@ namespace ANSIConsole
             if (_formatting.HasFlag(ANSIFormatting.Inverted)) result = ANSI.Inverted + result;
             if (_formatting.HasFlag(ANSIFormatting.StrikeThrough)) result = ANSI.StrikeThrough + result;
             
-            if (_opacity != null) result = ANSI.Foreground(Interpolate(_colorBackground ?? FromConsoleColor(Console.BackgroundColor), _colorForeground ?? FromConsoleColor(Console.ForegroundColor), (float)_opacity)) + result;
+            if (_opacity != null) result = ANSI.Foreground(Interpolate(_colorBackground ?? ConsoleColorOrDefault(Console.BackgroundColor, Color.Black), _colorForeground ?? ConsoleColorOrDefault(Console.ForegroundColor, Color.Gray), (float)_opacity)) + result;
             else if (_colorForeground != null) result = ANSI.Foreground((Color)_colorForeground) + result;
             if (_colorBackground != null) result = ANSI.Background((Color)_colorBackground) + result;
             if (_hyperlink != null) result = ANSI.Hyperlink(result, _hyperlink);
             if (_formatting.HasFlag(ANSIFormatting.Clear)) result += ANSI.Clear;
             return result;
         }
+
+        // Unix/redirected consoles can report -1 for an unknown terminal default.
+        private static Color ConsoleColorOrDefault(ConsoleColor color, Color fallback) =>
+            (int)color == -1 ? fallback : FromConsoleColor(color);
 
         public static Color FromConsoleColor(ConsoleColor color)
         {
